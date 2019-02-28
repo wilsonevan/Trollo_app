@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  details: MyString
+  due_date: 2019-02-28
+  due_time: 2019-02-28 14:08:19
+  list: one
+  user: one
+  board: one
+
+two:
+  title: MyString
+  details: MyString
+  due_date: 2019-02-28
+  due_time: 2019-02-28 14:08:19
+  list: two
+  user: two
+  board: two
