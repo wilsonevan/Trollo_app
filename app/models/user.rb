@@ -7,4 +7,9 @@ class User < ApplicationRecord
   has_many :boards
   has_many :lists, through: :boards
   has_many :tasks, through: :lists
+
+  # Assembles string of full name
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
 end

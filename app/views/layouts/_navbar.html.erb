@@ -1,0 +1,17 @@
+<nav class="ui grey inverted pointing huge menu">
+  <%# <img class="logo" alt="Doct" src="/doctor_logo/logo_small.png" height="50"/> %>
+  <%# <img class="logo" alt="Doct" src="/doctor_logo/logo_name.png" height="50"/> %>
+  <div class="left menu">
+    <%= link_to "Home", root_path, class: "item" %>
+    <%# <%= link_to "Boards", boards_path, class: "item" %>
+  </div>  
+  <div class="right menu">
+    <% if current_user %>
+      <%= link_to current_user.full_name, edit_user_registration_path(@user),class: "item" %>
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "item" %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: "item" %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: "item" %>
+    <% end %>
+  </div>
+</nav>

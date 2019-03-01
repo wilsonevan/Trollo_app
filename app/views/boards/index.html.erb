@@ -1,2 +1,29 @@
-<h1>Boards#index</h1>
-<p>Find me in app/views/boards/index.html.erb</p>
+<h1>All Boards</h1>
+<br />
+<%= link_to "New Board", new_board_path, class: "ui blue button" %>
+<hr />
+<h2><%= @boards.length <= 0 ? "No Boards" : "" %></h2>
+
+<div class="ui four cards">
+  <% @boards.each do |board| %>
+    <div class="ui card">
+      <div class="content">
+        <div class="header"><%= link_to board.name, board, class: "item" %></div>
+      </div>
+      <div class="content">
+        <% board.lists.each do |list| %>
+          <h4 class="ui sub header"><%= list.name %></h4>
+          <div class="event">
+            <div class="content">
+              <div class="summary">
+                <% list.tasks.each do |task| %>
+                  <%= task.title %><br />
+                <% end %>
+              </div>
+            </div>  
+          </div>  
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -14,7 +14,7 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = Board.new(board_params)
+    @board = current_user.boards.new(board_params)
 
     if @board.save
       flash[:success] = "Board Created"
@@ -32,6 +32,7 @@ class BoardsController < ApplicationController
 
   private
     def set_board
+     
       @board = Board.find(params[:id])
     end
 

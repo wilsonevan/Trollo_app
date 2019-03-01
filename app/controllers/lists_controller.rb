@@ -15,11 +15,12 @@ class ListsController < ApplicationController
   end
 
   def create
-    @list = List.new(list_params)
-
+    @list = @board.lists.new(list_params)
+    @list[:user_id] = current_user[:id]
+    
     if @list.save
       flash[:success] = "list Created"
-      redirect_to root_path # => list_path(@list)
+      redirect_to [@board,@list] # => list_path(@list)
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
       render :new
@@ -37,10 +38,12 @@ class ListsController < ApplicationController
     end
 
     def set_board
-      @board = Board.find(params[:board_id])
+   
+      @board = current_user.boards.find(params[:board_id])
+      
     end
 
     def list_params
-      params.require(:list).permit(:name)
+      params.require(:list).permit(:name, :board_id, :user_id)
     end
 end
