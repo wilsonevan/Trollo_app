@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_list
   before_action :set_board
-
   before_action :set_task, only: [:show, :destroy]
 
   def index
@@ -17,11 +16,13 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @list.tasks.new(task_params)
+    @task[:board_id] = @list[:board_id]
+    @task[:user_id] = current_user[:id]
 
     if @task.save
       flash[:success] = "Task Created"
-      redirect_to root_path # => task_path(@task)
+      redirect_to board_list_path(@board, @list) # => task_path(@task)
     else
       flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
       render :new
@@ -34,19 +35,24 @@ class TasksController < ApplicationController
   end
 
   private
-    def set_task
-      @task = Task.find(params[:id])
-    end
-
+    # List must be set first, even though the board is the parent
     def set_list
       @list = List.find(params[:list_id])
     end
 
+    # From here, the board_id can be derived, and stored for use in the controller above
     def set_board
-      @board = Board.find(params[:board_id])
+      # binding.pry
+      @board = current_user.boards.find(@list[:board_id])
+    end
+
+    # Finally, for instances which need it, the task can be used.
+    def set_task
+      @task = Task.find(params[:id])
     end
 
     def task_params
-      params.require(:task).permit(:name)
+      params.require(:task).permit(:title, :details, :due_date, :due_time)
     end
+
 end

@@ -1,2 +1,27 @@
-<h1>Lists#show</h1>
-<p>Find me in app/views/lists/show.html.erb</p>
+<div class="ui two column grid container">
+  <div class="column">
+    <br />
+      <div class="middle aligned content">
+        <h1 class="header"><%= @list.name %></h1>
+      </div>
+  </div>
+  <div class="column">
+    <br />
+    <%= link_to "New Task", new_list_task_path(@list), class: "ui blue button" %>
+  </div>
+</div>    
+<hr />
+
+<table class="ui striped table">  
+  <thead class="center aligned">
+    <tr>
+      <th colspan="1"><h1><%= @list.name %></h1></th>
+  </thead>
+  <tbody>
+    <% @list.tasks.each do |task| %>
+      <tr class="center aligned">
+        <td><%= task.title %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

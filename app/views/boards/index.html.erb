@@ -4,26 +4,64 @@
 <hr />
 <h2><%= @boards.length <= 0 ? "No Boards" : "" %></h2>
 
-<div class="ui four cards">
-  <% @boards.each do |board| %>
-    <div class="ui card">
-      <div class="content">
-        <div class="header"><%= link_to board.name, board, class: "item" %></div>
-      </div>
-      <div class="content">
-        <% board.lists.each do |list| %>
-          <h4 class="ui sub header"><%= list.name %></h4>
-          <div class="event">
+
+
+<div class="ui internally celled grid">
+  <div class="row">
+    <div class="two wide column">
+      <%# Insert All Tasks Here %>
+    </div>
+    <div class="twelve wide column">
+      <div class="ui three cards">
+        <% @boards.each do |board| %>
+          <div class="ui card">
             <div class="content">
-              <div class="summary">
-                <% list.tasks.each do |task| %>
-                  <%= task.title %><br />
-                <% end %>
-              </div>
-            </div>  
-          </div>  
+              <div class="header"><%= link_to board.name, board, class: "item" %></div>
+            </div>
+            <div class="content">
+              <% board.lists.each do |list| %>
+                <div class="ui card">
+                  <div class="content">
+                    <div class="header"><%= list.name %></div>
+                  </div>
+                  <div class="content">
+                    <div class="ui grid">
+                      <% list.tasks.each do |task| %>
+                        <div class="twelve wide column">
+                          <div class="event">
+                            <div class="content">
+                              <div class="summary">
+                                <% if task[:completed] %>
+                                  <p><i class="small check square outline icon"></i><%= task.title %><br /></p>
+                                <% else %>
+                                  <p><i class="small square outline icon"></i><%= task.title %><br /></p>
+                                <% end %>
+                              </div>
+                            </div>  
+                          </div> 
+                        </div>  
+                        <div class="four wide column">
+                          
+                          <%# Insert Check Mark Here if Task is Completed  %>
+                        </div> 
+                      <% end %>  
+                      
+                    </div>  
+                    
+                  </div>
+                  <div class="ui bottom attached button">
+                        <i class="add icon"></i>
+                        <%= link_to "New Task", new_list_task_path(list) %>
+                      </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
-  <% end %>
+    <div class="three wide column">
+      <%#  %>
+    </div>
+  </div>
 </div>

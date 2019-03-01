@@ -7,7 +7,7 @@ class ListsController < ApplicationController
   end
 
   def show
-    # @appointments = 
+
   end
 
   def new
@@ -20,7 +20,7 @@ class ListsController < ApplicationController
     
     if @list.save
       flash[:success] = "list Created"
-      redirect_to [@board,@list] # => list_path(@list)
+      redirect_to @board
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
       render :new
@@ -38,9 +38,7 @@ class ListsController < ApplicationController
     end
 
     def set_board
-   
       @board = current_user.boards.find(params[:board_id])
-      
     end
 
     def list_params
