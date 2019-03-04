@@ -13,6 +13,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    $previous_url = request.referer
   end
 
   def create
@@ -22,7 +23,7 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:success] = "Task Created"
-      redirect_to board_list_path(@board, @list)
+      redirect_to $previous_url
     else
       flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
       render :new
@@ -30,12 +31,13 @@ class TasksController < ApplicationController
   end
 
   def edit
+    $previous_url = request.referer
   end
 
   def update
     if @task.update(task_params)
       flash[:success] = "Task Updated"
-      redirect_to board_list_path(@board, @list)
+      redirect_to $previous_url
     else  
       flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
       render :edit
@@ -55,7 +57,6 @@ class TasksController < ApplicationController
 
     # From here, the board_id can be derived, and stored for use in the controller above
     def set_board
-      # binding.pry
       @board = current_user.boards.find(@list[:board_id])
     end
 

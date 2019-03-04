@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_board
+  before_action :set_board, except: [:destroy]
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -45,9 +45,13 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    # binding.pry
-    @list.destroy
-    redirect_to lists_path
+    if @list.destroy
+      flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
+      redirect_to lists_path
+    else
+      flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
+      redirect_to request.referer
+    end
   end
 
   private
@@ -57,7 +61,6 @@ class ListsController < ApplicationController
     end
 
     def set_board
-      # binding.pry
       @board = current_user.boards.find(params[:board_id])
     end
 
