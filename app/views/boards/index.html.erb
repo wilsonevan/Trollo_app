@@ -32,10 +32,10 @@
                         <div class="item">
                           <div class="right floated content">
                             <% if task[:due_date] %>
-                              <i class="clock outline icon"></i><%= task.due_date.strftime("%m/%d") %> |
+                              <i class="clock outline icon"></i><%= task.due_date.strftime("%m/%d/%y") %> |
                             <% end %>
                             <% if task[:completed] %>
-                              <i class="large check square outline icon"></i>
+                              <i class="check square outline icon"></i>
                             <% else %>
                               <i class="square outline icon"></i>
                             <% end %>

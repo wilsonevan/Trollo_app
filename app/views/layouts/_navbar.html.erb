@@ -1,10 +1,9 @@
 <nav class="ui grey inverted pointing huge menu">
-  <%# <img class="logo" alt="Doct" src="/doctor_logo/logo_small.png" height="50"/> %>
-  <%# <img class="logo" alt="Doct" src="/doctor_logo/logo_name.png" height="50"/> %>
+  <img class="logo" alt="logo2" src="/logo_2/logo_small.png" height="50"/>
   <div class="left menu">
-    <%= link_to "Home", root_path, class: "item" %>
+    <%= link_to "Boards", root_path, class: "item" %>
     <%# <%= link_to "Boards", boards_path, class: "item" %>
-  </div>  
+  </div>
   <div class="right menu">
     <% if current_user %>
       <%= link_to current_user.full_name, edit_user_registration_path(@user),class: "item" %>

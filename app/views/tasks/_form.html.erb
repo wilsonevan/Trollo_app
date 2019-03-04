@@ -1,4 +1,11 @@
 <%= form_with(model: [@list, @task], local: true, class: "ui form") do |f| %>
+  <br />
+  <div class="field">
+    <div class="ui checkbox">
+      <%= f.check_box :completed %>
+      <%= f.label :completed %>
+    </div>
+  </div>
   <div class="field">
     <%= f.label :title %>
     <%= f.text_field :title, autofocus: true, required: true, placeholder: "Task Title" %>
