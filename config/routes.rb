@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/index'
   get 'users/show'
   get 'users/new'
+  
   root "boards#index"
 
   devise_for :users
@@ -11,6 +12,6 @@ Rails.application.routes.draw do
   end
   
   resources :lists do
-    resources :tasks, only: [:index, :new, :create, :destroy]
+    resources :tasks
   end
 end

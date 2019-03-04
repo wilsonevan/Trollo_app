@@ -1,16 +1,16 @@
-<div class="ui two column grid container">
-  <div class="column">
-    <br />
-      <div class="middle aligned content">
-        <h1 class="header"><%= @list.name %></h1>
-      </div>
-  </div>
-  <div class="column">
-    <br />
-    <%= link_to "New Task", new_list_task_path(@list), class: "ui blue button" %>
-  </div>
-</div>    
-<hr />
+<h1><%= @list.name %>
+  <%= link_to edit_board_list_path(@board, @list) do %>
+    <i class="icons">
+      <i class="top right corner small grey pencil alternate icon"></i>
+    </i>
+  <% end %>
+</h1>
+<br />
+<%= link_to "Back to #{current_user.boards.find(@list[:board_id]).name}", current_user.boards.find(@list[:board_id]), class: "ui button" %>
+<%= link_to "New Task", new_list_task_path(@list), class: "ui blue button" %>
+<%= link_to "Delete List", board_list_path(@board, @list), method: :delete, class: "ui red button" %>
+<br /><br /><hr />
+<h2><%= @list.tasks.length <= 0 ? "No Tasks" : "" %></h2>
 
 <table class="ui striped table">  
   <thead class="center aligned">
@@ -20,7 +20,7 @@
   <tbody>
     <% @list.tasks.each do |task| %>
       <tr class="center aligned">
-        <td><%= task.title %></td>
+        <td><%= link_to task.title, edit_list_task_path(@list, task) %></td>
       </tr>
     <% end %>
   </tbody>

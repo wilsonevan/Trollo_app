@@ -1,16 +1,16 @@
-<div class="ui two column grid container">
-  <div class="column">
-    <br />
-      <div class="middle aligned content">
-        <h1 class="header"><%= @board.name %></h1>
-      </div>
-  </div>
-  <div class="column">
-    <br />
-    <%= link_to "New List", new_board_list_path(@board), class: "ui blue button" %>
-  </div>
-</div>    
-<hr />
+ <h1><%= @board.name %>
+  <%= link_to edit_board_path(@board) do %>
+    <i class="icons">
+      <i class="top right corner small grey pencil alternate icon"></i>
+    </i>
+  <% end %>
+</h1>
+<br />
+<%= link_to "Back to All Boards", root_path, class: "ui button" %>
+<%= link_to "New List", new_board_list_path(@board), class: "ui blue button" %>
+<%= link_to "Delete Board", board_path(@board), method: :delete, class: "ui red button" %>
+<br /><br /><hr />
+<h2><%= @board.lists.length <= 0 ? "No Lists" : "" %></h2>
 
 <% @board.lists.each do |list| %>
   <table class="ui striped table">  

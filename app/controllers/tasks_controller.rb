@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_list
   before_action :set_board
-  before_action :set_task, only: [:show, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = @list.tasks
@@ -22,16 +22,29 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:success] = "Task Created"
-      redirect_to board_list_path(@board, @list) # => task_path(@task)
+      redirect_to board_list_path(@board, @list)
     else
       flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
       render :new
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @task.update(task_params)
+      flash[:success] = "Task Updated"
+      redirect_to board_list_path(@board, @list)
+    else  
+      flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
+      render :edit
+    end
+  end
+
   def destroy
     @task.destroy
-    redirect_to tasks_path
+    redirect_to board_list_path(@board, @list)
   end
 
   private
@@ -52,7 +65,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :details, :due_date, :due_time)
+      params.require(:task).permit(:title, :details, :due_date, :due_time, :completed)
     end
 
 end

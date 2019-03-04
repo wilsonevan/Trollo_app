@@ -16,43 +16,41 @@
         <% @boards.each do |board| %>
           <div class="ui card">
             <div class="content">
-              <div class="header"><%= link_to board.name, board, class: "item" %></div>
+              <div class="header">
+                <%= link_to board.name, board, class: "item" %>
+              </div>
             </div>
             <div class="content">
               <% board.lists.each do |list| %>
                 <div class="ui card">
                   <div class="content">
-                    <div class="header"><%= list.name %></div>
+                    <div class="header"><%= link_to list.name, [board, list], class: "item" %></div>
                   </div>
                   <div class="content">
-                    <div class="ui grid">
-                      <% list.tasks.each do |task| %>
-                        <div class="twelve wide column">
-                          <div class="event">
-                            <div class="content">
-                              <div class="summary">
-                                <% if task[:completed] %>
-                                  <p><i class="small check square outline icon"></i><%= task.title %><br /></p>
-                                <% else %>
-                                  <p><i class="small square outline icon"></i><%= task.title %><br /></p>
-                                <% end %>
-                              </div>
-                            </div>  
-                          </div> 
-                        </div>  
-                        <div class="four wide column">
-                          
-                          <%# Insert Check Mark Here if Task is Completed  %>
-                        </div> 
-                      <% end %>  
-                      
-                    </div>  
-                    
+                    <div class="ui middle aligned divided list">
+                      <% list.tasks.order_by_due_date.each do |task| %>
+                        <div class="item">
+                          <div class="right floated content">
+                            <% if task[:due_date] %>
+                              <i class="clock outline icon"></i><%= task.due_date.strftime("%m/%d") %> |
+                            <% end %>
+                            <% if task[:completed] %>
+                              <i class="large check square outline icon"></i>
+                            <% else %>
+                              <i class="square outline icon"></i>
+                            <% end %>
+                          </div>
+                          <div class="content">
+                            <div class="subheader"><%= link_to task.title, edit_list_task_path(list, task) %></div>
+                          </div>
+                        </div>
+                      <% end %> 
+                    </div>
                   </div>
                   <div class="ui bottom attached button">
-                        <i class="add icon"></i>
-                        <%= link_to "New Task", new_list_task_path(list) %>
-                      </div>
+                    <i class="add icon"></i>
+                    <%= link_to "New Task", new_list_task_path(list) %>
+                  </div>
                 </div>
               <% end %>
             </div>

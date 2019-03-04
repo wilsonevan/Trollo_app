@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   before_action :set_board
-  before_action :set_list, only: [:show, :destroy]
+  before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   def index
     @lists = @board.lists
@@ -12,6 +12,7 @@ class ListsController < ApplicationController
 
   def new
     @list = List.new
+    # render partial: "form"
   end
 
   def create
@@ -27,7 +28,24 @@ class ListsController < ApplicationController
     end
   end
 
+  def edit
+    
+  end
+
+  def update
+    @list[:user_id] = current_user[:id]
+
+    if @list.update(list_params)
+      flash[:success] = "Task Updated"
+      redirect_to @board
+    else
+      flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
+      render :edit
+    end
+  end
+
   def destroy
+    # binding.pry
     @list.destroy
     redirect_to lists_path
   end
@@ -35,9 +53,11 @@ class ListsController < ApplicationController
   private
     def set_list
       @list = List.find(params[:id])
+      # binding.pry
     end
 
     def set_board
+      # binding.pry
       @board = current_user.boards.find(params[:board_id])
     end
 
