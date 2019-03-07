@@ -3,7 +3,8 @@ class BoardsController < ApplicationController
 
   def index
     @boards = current_user.boards
-    
+    # render json: @board.lists
+
   end
 
   def show

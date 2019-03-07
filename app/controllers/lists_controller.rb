@@ -3,11 +3,12 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   def index
-    @lists = @board.lists
+    # @lists = @board.lists
+    render json: @board.lists
   end
 
   def show
-
+    render json: @list
   end
 
   def new
@@ -21,10 +22,12 @@ class ListsController < ApplicationController
     
     if @list.save
       flash[:success] = "list Created"
-      redirect_to @board
+      # redirect_to @board
+      render json: @list
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
-      render :new
+      # render :new
+      render_error(@list)
     end
   end
 
@@ -37,17 +40,19 @@ class ListsController < ApplicationController
 
     if @list.update(list_params)
       flash[:success] = "Task Updated"
-      redirect_to @board
+      # redirect_to @board
+      render json: @list
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
-      render :edit
+      # render :edit
+      render_error(@list)
     end
   end
 
   def destroy
     if @list.destroy
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
-      redirect_to lists_path
+      render json: { message: 'removed' }, status: :ok
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
       redirect_to request.referer

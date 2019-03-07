@@ -9,21 +9,19 @@
 <div class="ui internally celled grid">
   <div class="row">
     <div class="two wide column">
-    <h4 class="ui header">All Tasks</h4>
+      <h4 class="ui header">All Tasks</h4>
       <div class="ui middle aligned divided list">
         <% Task.all.order_by_due_date.each do |task|%>
-          <%# if task.due_date >= Date.today %>
-            <div class="item">
-              <div class="right floated content">
-                <% if task[:due_date] %>
-                  <i class="clock outline icon"></i><%= task.due_date.strftime("%m/%d") %>
-                <% end %>
-              </div>  
-              <div class="content">
-                <%= link_to task.title, edit_list_task_path(task[:list_id],task[:id]), class: "subheader" %>
-              </div>
+          <div class="item">
+            <div class="right floated content">
+              <% if task[:due_date] %>
+                <i class="clock outline icon"></i><%= task.due_date.strftime("%m/%d") %>
+              <% end %>
+            </div>  
+            <div class="content">
+              <%= link_to task.title, edit_list_task_path(task[:list_id],task[:id]), class: "subheader" %>
             </div>
-          <%# end %>
+          </div>
         <% end %>
       </div>
     </div>
@@ -38,27 +36,17 @@
               <% board.lists.each do |list| %>
                 <div class="ui card">
                   <div class="content">
-                    <%= link_to list.name, [board, list], class: "ui fourth header" %>
+                    <%# link_to list.name, [board, list], class: "ui fourth header" %>
+                    <div 
+                      class="list-item" 
+                      data-id=<%= list.id %>
+                      data-name="<%= list.name %>"
+                    >
+                      <%= list.name %>
+                    </div>
                   </div>
                   <div class="content">
-                    <div class="ui middle aligned divided list">
-                      <% list.tasks.order_by_due_date.each do |task| %>
-                        <div class="item">
-                          <div class="right floated content">
-                            <% if task[:due_date] %>
-                              <i class="clock outline icon"></i><%= task.due_date.strftime("%m/%d/%y") %> |
-                            <% end %>
-                            <% if task[:completed] %>
-                              <i class="check square outline icon"></i>
-                            <% else %>
-                              <i class="square outline icon"></i>
-                            <% end %>
-                          </div>
-                          <div class="content">
-                            <div class="subheader"><%= link_to task.title, edit_list_task_path(list, task) %></div>
-                          </div>
-                        </div>
-                      <% end %> 
+                    <div id="tasks-<%= list.id %>" class="ui middle aligned divided list">
                     </div>
                   </div>
                   <div class="ui bottom attached button">

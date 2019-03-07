@@ -8,7 +8,6 @@
 <br />
 <%= link_to "Back to #{current_user.boards.find(@list[:board_id]).name}", current_user.boards.find(@list[:board_id]), class: "ui button" %>
 <%= link_to "New Task", new_list_task_path(@list), class: "ui blue button" %>
-<%= binding.pry %>
 <%= link_to "Delete List", [@board, @list], method: :delete %>
 <br /><br /><hr />
 <h2><%= @list.tasks.length <= 0 ? "No Tasks" : "" %></h2>

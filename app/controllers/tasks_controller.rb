@@ -4,11 +4,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = @list.tasks
+    # @tasks = @list.tasks
+    render json: @list.tasks
+    # binding.pry
   end
 
   def show
-    # @appointments = 
+    render json: @task
   end
 
   def new
@@ -23,10 +25,12 @@ class TasksController < ApplicationController
 
     if @task.save
       flash[:success] = "Task Created"
-      redirect_to $previous_url
+      # redirect_to $previous_url
+      render json: @task
     else
       flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
-      render :new
+      # render :new
+      render_error(@task)
     end
   end
 
@@ -37,16 +41,19 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       flash[:success] = "Task Updated"
-      redirect_to $previous_url
+      # redirect_to $previous_url
+      render json: @task
     else  
       flash[:error] = "Error #{@task.errors.full_messages.join("\n")}"
-      render :edit
+      # render :edit
+      render_error(@task)
     end
   end
 
   def destroy
     @task.destroy
-    redirect_to board_list_path(@board, @list)
+    # redirect_to board_list_path(@board, @list)
+    render json: { message: 'removed' }, status: :ok
   end
 
   private
