@@ -8,7 +8,7 @@ class ListsController < ApplicationController
   end
 
   def show
-    render json: @list
+    # render json: @list
   end
 
   def new
@@ -22,12 +22,12 @@ class ListsController < ApplicationController
     
     if @list.save
       flash[:success] = "list Created"
-      # redirect_to @board
-      render json: @list
+      redirect_to @board
+      # render json: @list
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
-      # render :new
-      render_error(@list)
+      render :new
+      # render_error(@list)
     end
   end
 
@@ -40,12 +40,12 @@ class ListsController < ApplicationController
 
     if @list.update(list_params)
       flash[:success] = "Task Updated"
-      # redirect_to @board
-      render json: @list
+      redirect_to @board
+      # render json: @list
     else
       flash[:error] = "Error #{@list.errors.full_messages.join("\n")}"
-      # render :edit
-      render_error(@list)
+      render :edit
+      # render_error(@list)
     end
   end
 
