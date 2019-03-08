@@ -45,13 +45,15 @@
                       <%= list.name %>
                     </div>
                   </div>
-                  <div class="content">
+                  <div class="content" id="tasks-list">
                     <div id="tasks-<%= list.id %>" class="ui middle aligned divided list">
                     </div>
                   </div>
-                  <div class="ui bottom attached button">
-                    <i class="add icon"></i>
-                    <%= link_to "New Task", new_list_task_path(list) %>
+                  <div id="bottom-button-<%= list.id %>" class="bottom-button">
+                    <div class="ui bottom attached button">
+                      <i class="add icon"></i>
+                      <%= link_to "New Task", new_list_task_path(list) %>
+                    </div>
                   </div>
                 </div>
               <% end %>

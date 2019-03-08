@@ -18,6 +18,12 @@ class TasksController < ApplicationController
     $previous_url = request.referer
   end
 
+  # def form
+  #   # binding.pry
+  #   @task = Task.new
+  #   render partial: "form"
+  # end
+
   def create
     @task = @list.tasks.new(task_params)
     @task[:board_id] = @list[:board_id]
